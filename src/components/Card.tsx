@@ -10,6 +10,7 @@ export default function Card({ card }: CardProps) {
 
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+    const [hasBeenDragged, setHasBeenDragged] = useState(false);
 
     const offsetRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 })
 
@@ -42,21 +43,27 @@ export default function Card({ card }: CardProps) {
     }, [isDragging])
 
     const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        setHasBeenDragged(true);
         setIsDragging(true);
         const cardElement = e.currentTarget;
+        const rect = cardElement.getBoundingClientRect();
         const offset = {
-            x: e.clientX - cardElement.getBoundingClientRect().left,
-            y: e.clientY - cardElement.getBoundingClientRect().top
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
         };
 
         offsetRef.current = offset;
+
+        setPosition({x: rect.left, y: rect.top})
+
     };
 
     return (
         <div
             className="card"
             onMouseDown={onMouseDown}
-            style={{ transform: `translate(${position.x}px, ${position.y}px)` }}>
+            style={{ transform: `translate(${position.x}px, ${position.y}px)`,
+                    position: hasBeenDragged ? "absolute" : "relative" }}>
             <p>{card.rank} - {card.suit}</p>
         </div>
     );
