@@ -1,7 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/Card.css';
+import type { Card } from '../types/Card';
 
-export default function Card() {
+interface CardProps {
+    card: Card;
+}
+
+export default function Card({ card }: CardProps) {
 
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
@@ -9,7 +14,7 @@ export default function Card() {
     const offsetRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 })
 
     useEffect(() => {
-        const onMouseMove = (e) => {
+        const onMouseMove = (e: MouseEvent) => {
             if (!isDragging) return;
 
             const newPosition = {
@@ -20,8 +25,7 @@ export default function Card() {
             setPosition(newPosition)
         };
 
-        const onMouseUp = (e) => {
-            console.log("unclicked")
+        const onMouseUp = (e: MouseEvent) => {
             setIsDragging(false);
         };
 
@@ -37,7 +41,7 @@ export default function Card() {
 
     }, [isDragging])
 
-    const onMouseDown = (e) => {
+    const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         setIsDragging(true);
         const cardElement = e.currentTarget;
         const offset = {
@@ -53,7 +57,7 @@ export default function Card() {
             className="card"
             onMouseDown={onMouseDown}
             style={{ transform: `translate(${position.x}px, ${position.y}px)` }}>
-            <p>Ace of Spades</p>
+            <p>{card.rank} - {card.suit}</p>
         </div>
     );
 }
