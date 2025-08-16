@@ -1,69 +1,91 @@
-# React + TypeScript + Vite
+# Card Game Learning Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A progressive learning journey through card game development, building from simple concepts to complex gameplay mechanics.
 
-Currently, two official plugins are available:
+## 🎯 Project Goals
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project follows a structured roadmap to learn game development fundamentals by implementing increasingly complex card games:
 
-## Expanding the ESLint configuration
+1. **War** - Basic game logic and turn management
+2. **Go Fish** - Hand management and player interaction  
+3. **Crazy Eights** - Rule engines and special card effects
+4. **Canadian Salad** - Complex trick-taking with bidding
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React** + **TypeScript** - Component-based UI with type safety
+- **CSS** - Custom styling and animations
+- **No external game libraries** - Building everything from scratch for learning
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 📁 Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/     # Reusable UI components (Card, etc.)
+├── types/          # TypeScript interfaces
+├── utils/          # Game logic utilities (deck management, etc.)
+├── styles/         # CSS files
+└── games/          # Individual game implementations
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ✅ Current Progress
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Completed Features
+- ✅ Basic draggable card component
+- ✅ Card data structure and standard deck generation
+- ✅ Mouse drag functionality with smooth positioning
+- ✅ CSS-based card rendering
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Currently Working On
+- 🔨 War game implementation
+- 🔨 Shuffle algorithm
+- 🔨 Card dealing system
+
+## 🎮 Games Roadmap
+
+### Phase 1: War (Current)
+**Learning Focus:** Core game mechanics
+- Card comparison logic
+- Turn-based gameplay
+- Win conditions
+- Basic state management
+
+### Phase 2: Go Fish
+**Learning Focus:** Player interaction
+- Hand management
+- Player-to-player card requests
+- Set collection mechanics
+
+### Phase 3: Crazy Eights  
+**Learning Focus:** Rule systems
+- Card matching validation
+- Special card effects
+- Game state modifications
+
+### Phase 4: Canadian Salad
+**Learning Focus:** Complex gameplay
+- Bidding systems
+- Trump suit mechanics
+- Advanced scoring
+
+## 🚀 Running the Project
+
+```bash
+npm install
+npm start
 ```
+
+## 📚 Learning Notes
+
+This project prioritizes learning over using existing solutions. Each game builds upon concepts from previous implementations, creating a solid foundation for game development skills.
+
+**Key Learning Areas:**
+- State management in React
+- Event handling and user interaction
+- Game logic and rule implementation
+- UI/UX for interactive applications
+- TypeScript for type-safe development
+
+---
+
+*This is a learning project focused on understanding game development fundamentals through hands-on implementation.*
