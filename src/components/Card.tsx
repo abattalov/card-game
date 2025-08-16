@@ -63,7 +63,8 @@ export default function Card({ card }: CardProps) {
             className="card"
             onMouseDown={onMouseDown}
             style={{ transform: `translate(${position.x}px, ${position.y}px)`,
-                    position: hasBeenDragged ? "absolute" : "relative" }}>
+                    position: (hasBeenDragged ? "absolute" : "relative"),
+                    zIndex: isDragging ? "2" : "1"}}>
             <p>{card.rank} - {card.suit}</p>
         </div>
     );
