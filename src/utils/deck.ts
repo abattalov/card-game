@@ -16,10 +16,23 @@ export function createStandardDeck(): Card[]{
                 rank: ranks[j],
                 value: value
             };
-            
+
             deck.push(card);
         }
     }
 
     return deck;
 };
+
+export function shuffleDeck(deck: Card[]){
+    let deckCopy = [...deck];
+    let newDeck = [];
+
+    while(deckCopy.length != 0){
+        let randomNumber = Math.floor(Math.random() * deckCopy.length);
+        let randomCard = deckCopy.splice(randomNumber, 1)[0]
+        newDeck.push(randomCard)
+    }
+
+    return newDeck;
+}
