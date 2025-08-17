@@ -1,4 +1,4 @@
-import type { Card } from './../types/Card'
+import type { Card, GameState } from './../types/Card'
 
 const suits: Card['suit'][] = ['hearts', 'diamonds', 'clubs', 'spades'];
 const ranks: Card['rank'][] = ['A','2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -35,4 +35,13 @@ export function shuffleDeck(deck: Card[]){
     }
 
     return newDeck;
+}
+
+export function dealCards(deck: Card[]): GameState{
+    const playerHands = {
+        player1: deck.slice(0,26),
+        player2: deck.slice(26, 52)
+    }
+
+    return playerHands;
 }
