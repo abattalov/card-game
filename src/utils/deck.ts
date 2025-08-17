@@ -45,3 +45,18 @@ export function dealCards(deck: Card[]): GameState{
 
     return playerHands;
 }
+
+export function getNextCard(playerHands: GameState): GameState{
+    const player1Copy = [...playerHands.player1]
+    const player2Copy = [...playerHands.player2]
+    const player1Card = player1Copy.pop();
+    const player2Card = player2Copy.pop();
+
+    const newGameState = {
+        player1: player1Copy,
+        player2: player2Copy,
+        game: {player1Card: player1Card, player2Card: player2Card}
+    }
+
+    return newGameState
+}

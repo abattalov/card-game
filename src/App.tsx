@@ -1,19 +1,28 @@
 import Card from "./components/Card";
-import { createStandardDeck, dealCards, shuffleDeck } from "./utils/deck";
+import { createStandardDeck, dealCards, getNextCard, shuffleDeck } from "./utils/deck";
+import { useState } from 'react';
 
 function App() {
-  const deck = createStandardDeck();
-  const newDeck = shuffleDeck(deck)
-  let hand = newDeck.slice(0, 5);
+  
 
-  console.log(dealCards(newDeck))
+  const [gameState, setGameState] = useState(() => {
+    const deck = createStandardDeck();
+    const newDeck = shuffleDeck(deck)
+    let playersHands = dealCards(newDeck);
 
+    return playersHands
+  });
+
+  const handleNextHand = () => {
+    setGameState(prev => getNextCard(prev))
+  }
+
+  console.log(gameState)
 
   return (
     <div style={{ display: "flex", gap: "10px" }}>
-      {hand.map((handCard) => (
-        <Card key={handCard.id} card={handCard} />
-      ))}
+      <button onClick={handleNextHand}>next hand</button>
+      {/* <Card /> */}
     </div>
   );
 }
