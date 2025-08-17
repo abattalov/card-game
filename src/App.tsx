@@ -21,8 +21,15 @@ function App() {
 
   return (
     <div style={{ display: "flex", gap: "10px" }}>
+      <p>Player 1: {gameState.player1.length}</p>
+      <p>Player 2: {gameState.player2.length}</p>
       <button onClick={handleNextHand}>next hand</button>
-      {/* <Card /> */}
+      {gameState.game && gameState.game.player1Card && gameState.game.player2Card &&
+        <>
+          <Card card={gameState.game.player1Card}/>
+          <Card card={gameState.game.player2Card}/>
+        </>
+      }
     </div>
   );
 }
