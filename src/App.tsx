@@ -23,8 +23,8 @@ function App() {
 
   const resolveRound = () => {
     if(gameState.game){
-      let player1Card = gameState.game.player1Card;
-      let player2Card = gameState.game.player2Card;
+      let player1Card = gameState.game.player1Card![0];
+      let player2Card = gameState.game.player2Card![0];
   
       if(player1Card && player2Card){
         if(player1Card.value > player2Card.value){
@@ -35,14 +35,16 @@ function App() {
                 game: null
               }
             })
+        } else if (player1Card.value === player2Card.value){
+          console.log("WAR!");
         } else {
           setGameState((prev) => {
-              return {
-                player1: prev.player1,
-                player2: [player2Card, player1Card, ...prev.player2],
-                game: null
-              }
-            })
+            return {
+              player1: prev.player1,
+              player2: [player2Card, player1Card, ...prev.player2],
+              game: null
+            }
+          })
         }
       }
     }
@@ -59,8 +61,8 @@ function App() {
       <button disabled={drawPhase} onClick={resolveRound}>resolve round</button>
       {gameState.game && gameState.game.player1Card && gameState.game.player2Card &&
         <>
-          <Card card={gameState.game.player1Card}/>
-          <Card card={gameState.game.player2Card}/>
+          <Card card={gameState.game.player1Card[0]}/>
+          <Card card={gameState.game.player2Card[0]}/>
         </>
       }
     </div>

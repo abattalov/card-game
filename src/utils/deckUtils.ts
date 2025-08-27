@@ -1,4 +1,4 @@
-import type { Card, GameState } from '../types/Card'
+import type { Card, GameState } from '../types/types'
 
 const suits: Card['suit'][] = ['hearts', 'diamonds', 'clubs', 'spades'];
 const ranks: Card['rank'][] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -73,7 +73,7 @@ export function getNextCard(playerHands: GameState): GameState {
     const newGameState = {
         player1: player1Copy,
         player2: player2Copy,
-        game: { player1Card: player1Card, player2Card: player2Card }
+        game: { player1Card: [player1Card], player2Card: [player2Card] }
     }
 
     return newGameState

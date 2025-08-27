@@ -8,6 +8,6 @@ export interface Card {
 export interface GameState {
     player1: Card[],
     player2: Card[],
-    game?: {player1Card?: Card, player2Card?: Card} | null
+    game?: {player1Card?: Card[], player2Card?: Card[]} | null
 }
 
