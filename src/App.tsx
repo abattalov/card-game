@@ -1,5 +1,5 @@
 import Card from "./components/Card";
-import { createStandardDeck, dealCards, getNextCard, shuffleDeck } from "./utils/deck";
+import { createStandardDeck, dealCards, getNextCard, shuffleDeck } from "./utils/deckUtils";
 import { useState } from 'react';
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
         if(player1Card.value > player2Card.value){
             setGameState((prev) => {
               return {
-                player1: [...prev.player1, player1Card, player2Card],
+                player1: [player1Card, player2Card, ...prev.player1],
                 player2: prev.player2,
                 game: null
               }
@@ -39,7 +39,7 @@ function App() {
           setGameState((prev) => {
               return {
                 player1: prev.player1,
-                player2: [...prev.player2, player1Card, player2Card],
+                player2: [player2Card, player1Card, ...prev.player2],
                 game: null
               }
             })
