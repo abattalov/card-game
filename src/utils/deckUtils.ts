@@ -10,6 +10,7 @@ export function createStandardDeck(): Card[] {
     for (let i = 0; i < suits.length; i++) {
         for (let j = 0; j < ranks.length; j++) {
             let value = j + 1;
+            // let value = 1; //For testing ties
 
             let card: Card = {
                 id: `${suits[i]}-${ranks[j]}`,
@@ -78,4 +79,66 @@ export function getNextCard(playerHands: GameState): GameState {
     }
 
     return newGameState
+}
+
+export function getTieCards(playerHands: GameState): GameState {
+    const player1Copy = [...playerHands.player1];
+    const player2Copy = [...playerHands.player2];
+
+    // Check if players have enough cards for war (need at least 4: 3 face-down + 1 face-up)
+    const cardsNeeded = 4;
+    
+    if (player1Copy.length < cardsNeeded || player2Copy.length < cardsNeeded) {
+        // Not enough cards for war - whoever has more cards wins, or it's a draw
+        const allCards = [
+            ...(playerHands.game?.player1Card || []),
+            ...(playerHands.game?.player2Card || [])
+        ];
+        
+        if (player1Copy.length > player2Copy.length) {
+            return {
+                player1: [...allCards, ...player1Copy],
+                player2: player2Copy,
+                game: null
+            };
+        } else if (player2Copy.length > player1Copy.length) {
+            return {
+                player1: player1Copy,
+                player2: [...allCards, ...player2Copy],
+                game: null
+            };
+        } else {
+            // Equal cards, split them or handle as draw
+            return {
+                player1: player1Copy,
+                player2: player2Copy,
+                game: null
+            };
+        }
+    }
+
+    // Take 4 cards from each player (3 face-down, 1 face-up for comparison)
+    const player1WarCards = player1Copy.splice(-cardsNeeded);
+    const player2WarCards = player2Copy.splice(-cardsNeeded);
+
+    // Add previous cards and new war cards
+    const allPlayer1Cards = [
+        ...(playerHands.game?.player1Card || []),
+        ...player1WarCards
+    ];
+    const allPlayer2Cards = [
+        ...(playerHands.game?.player2Card || []),
+        ...player2WarCards
+    ];
+
+    const newGameState: GameState = {
+        player1: player1Copy,
+        player2: player2Copy,
+        game: { 
+            player1Card: allPlayer1Cards, 
+            player2Card: allPlayer2Cards 
+        }
+    };
+
+    return newGameState;
 }
