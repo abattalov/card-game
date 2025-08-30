@@ -1,8 +1,8 @@
 import type { Card, GameState } from '../types/types'
 
 const suits: Card['suit'][] = ['hearts', 'diamonds', 'clubs', 'spades'];
-// const ranks: Card['rank'][] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
-const ranks: Card['rank'][] = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'] // for tie testing
+const ranks: Card['rank'][] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+// const ranks: Card['rank'][] = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'] // for tie testing
 
 export function createStandardDeck(): Card[] {
     const deck: Card[] = [];
