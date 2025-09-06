@@ -1,8 +1,10 @@
 export interface Card {
     id: string,
     suit: 'hearts' | 'diamonds' | 'clubs' | 'spades',
-    rank: 'A' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | 'J' | 'Q' | 'K',
+    rank: 'A' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | 'J' | 'Q' | 'K',
     value: number,
+    faceUp: boolean,
+    img: string
 }
 
 export interface GameState {

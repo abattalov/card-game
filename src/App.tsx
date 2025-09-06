@@ -26,7 +26,7 @@ function App() {
 
     const drawTimer = setTimeout(() => {
       setGameState(prev => getNextCard(prev))
-    }, 1000)
+    }, 100)
 
     return () => clearTimeout(drawTimer)
 
@@ -39,7 +39,7 @@ function App() {
 
     const resolveTimer = setTimeout(() => {
       resolveRound();
-    }, 1000)
+    }, 100)
 
     return () => clearTimeout(resolveTimer);
   }, [autoPlay, gameState.game])

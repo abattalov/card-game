@@ -65,7 +65,8 @@ export default function Card({ card }: CardProps) {
             style={{ transform: `translate(${position.x}px, ${position.y}px)`,
                     position: (hasBeenDragged ? "absolute" : "relative"),
                     zIndex: isDragging ? "2" : "1"}}>
-            <p>{card.rank} - {card.suit}</p>
+            {/* <p>{card.rank} - {card.suit}</p> */}
+            <img src={card.img}/>
         </div>
     );
 }

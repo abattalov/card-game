@@ -1,7 +1,7 @@
 import type { Card, GameState } from '../types/types'
 
 const suits: Card['suit'][] = ['hearts', 'diamonds', 'clubs', 'spades'];
-const ranks: Card['rank'][] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+const ranks: Card['rank'][] = ['A', '02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K']
 // const ranks: Card['rank'][] = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'] // for tie testing
 
 export function createStandardDeck(): Card[] {
@@ -16,8 +16,12 @@ export function createStandardDeck(): Card[] {
                 id: `${suits[i]}-${ranks[j]}`,
                 suit: suits[i],
                 rank: ranks[j],
-                value: value
+                value: value,
+                faceUp: false,
+                img: `/cards/card_${suits[i]}_${ranks[j]}.png`
             };
+
+            // console.log(card)
 
             deck.push(card);
         }
