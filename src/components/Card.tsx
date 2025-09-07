@@ -30,7 +30,7 @@ export default function Card({ card }: CardProps) {
             setIsDragging(false);
         };
 
-        if(isDragging){
+        if (isDragging) {
             document.addEventListener('mouseup', onMouseUp);
             document.addEventListener('mousemove', onMouseMove);
         }
@@ -54,19 +54,20 @@ export default function Card({ card }: CardProps) {
 
         offsetRef.current = offset;
 
-        setPosition({x: rect.left, y: rect.top})
+        setPosition({ x: rect.left, y: rect.top })
 
     };
 
     return (
-        <div
+        <img
+            src={card.img}
             className="card"
             onMouseDown={onMouseDown}
-            style={{ transform: `translate(${position.x}px, ${position.y}px)`,
-                    position: (hasBeenDragged ? "absolute" : "relative"),
-                    zIndex: isDragging ? "2" : "1"}}>
-            {/* <p>{card.rank} - {card.suit}</p> */}
-            <img src={card.img}/>
-        </div>
+            style={{
+                transform: `translate(${position.x}px, ${position.y}px)`,
+                position: (hasBeenDragged ? "absolute" : "relative"),
+                zIndex: isDragging ? "2" : "1"
+            }}
+        />
     );
 }

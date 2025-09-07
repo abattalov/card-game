@@ -89,36 +89,58 @@ function App() {
     }
   }
 
+  let player1Hand = gameState.player1;
+  let player2Hand = gameState.player2;
+
   return (
-    <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
-      <div style={{ display: "flex", gap: "10px" }}>
-        <p>Player 1: {gameState.player1.length}</p>
-        <p>Player 2: {gameState.player2.length}</p>
+    <div className="main-container">
+      <div className="player1-card-container">
+        <div className="card-stack">
+          {player1Hand.map((card, index) =>
+            <div key={`p1-${index}`} style={{ position: 'absolute', top: `${index * 3}px`, left: '50%',
+              transform: 'translateX(-50%)'}}>
+              <Card card={card} />
+            </div>)}
+        </div>
       </div>
 
-      <div style={{ display: "flex", gap: "10px" }}>
-        <button onClick={() => setAutoPlay(!autoPlay)}>
-          {autoPlay ? "Stop Auto Play" : "Start Auto Play"}
-        </button>
-        <button onClick={handleNextHand}>next hand</button>
-        <button onClick={resolveRound}>resolve round</button>
-      </div>
+      <div className="game-container">
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button onClick={() => setAutoPlay(!autoPlay)}>
+            {autoPlay ? "Stop Auto Play" : "Start Auto Play"}
+          </button>
+          <button onClick={handleNextHand}>next hand</button>
+          <button onClick={resolveRound}>resolve round</button>
+        </div>
 
-      {gameState.game && gameState.game.player1Card && gameState.game.player2Card && (
-        <div>
-          {gameState.game.player1Card.length > 1 && <p style={{ color: 'red', fontWeight: 'bold' }}>WAR!</p>}
-          <div style={{ display: "flex", gap: "10px" }}>
-            <div>
-              <p>Player 1 ({gameState.game.player1Card.length} cards)</p>
-              <Card card={gameState.game.player1Card[gameState.game.player1Card.length - 1]} />
-            </div>
-            <div>
-              <p>Player 2 ({gameState.game.player2Card.length} cards)</p>
-              <Card card={gameState.game.player2Card[gameState.game.player2Card.length - 1]} />
+        {gameState.game && gameState.game.player1Card && gameState.game.player2Card && (
+          <div>
+            {gameState.game.player1Card.length > 1 && <p style={{ color: 'red', fontWeight: 'bold' }}>WAR!</p>}
+            <div style={{ display: "flex", gap: "10px" }}>
+              <div>
+                <p>Player 1 ({gameState.game.player1Card.length} cards)</p>
+                <Card card={gameState.game.player1Card[gameState.game.player1Card.length - 1]} />
+              </div>
+              <div>
+                <p>Player 2 ({gameState.game.player2Card.length} cards)</p>
+                <Card card={gameState.game.player2Card[gameState.game.player2Card.length - 1]} />
+              </div>
             </div>
           </div>
+        )}
+      </div>
+
+      <div className="player2-card-container">
+        <div className="card-stack">
+          {player2Hand.map((card, index) =>
+            <div key={`p2-${index}`} style={{
+              position: 'absolute', top: `${index * 3}px`, left: '50%',
+              transform: 'translateX(-50%)'
+            }}>
+              <Card card={card} />
+            </div>)}
         </div>
-      )}
+      </div>
     </div>
   );
 
