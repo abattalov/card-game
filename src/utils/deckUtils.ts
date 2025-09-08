@@ -21,8 +21,6 @@ export function createStandardDeck(): Card[] {
                 img: `/cards/card_${suits[i]}_${ranks[j]}.png`
             };
 
-            // console.log(card)
-
             deck.push(card);
         }
     }

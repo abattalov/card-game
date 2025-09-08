@@ -56,9 +56,6 @@ function App() {
     return () => clearInterval(interval);
   }, [keepBursting]);
 
-  const stopConfetti = () => {
-    setKeepBursting(false);
-  };
 
   useEffect(() => {
     if (!autoPlay || gameState.game || gameState.player1.length === 0 || gameState.player2.length === 0) {
@@ -66,16 +63,10 @@ function App() {
         let declareWinner = 2;
         setWinner(declareWinner)
         handleWin();
-        console.log("game over");
-        console.log("winner is " + declareWinner);
-
       } else if (gameState.game === null && gameState.player2.length === 0) {
         let declareWinner = 1;
         setWinner(declareWinner)
         handleWin();
-        console.log("game over");
-        console.log("winner is " + declareWinner);
-
       }
       return;
     }
@@ -95,7 +86,7 @@ function App() {
 
     const resolveTimer = setTimeout(() => {
       resolveRound();
-    }, 100)
+    }, 1000)
 
     return () => clearTimeout(resolveTimer);
   }, [autoPlay, gameState.game])
@@ -138,7 +129,6 @@ function App() {
       }
     } else {
       if (gameState.player1.length === 0 || gameState.player2.length === 0) {
-
         return;
       }
     }
@@ -167,10 +157,10 @@ function App() {
               <div className="card-stack">
                 {player1Hand.map((card, index) =>
                   <div key={`p1-${index}`} style={{
-                    position: 'absolute', top: `${index * 3}px`, left: '50%',
+                    position: 'absolute', top: `${index * 5}px`, left: '50%',
                     transform: 'translateX(-50%)'
                   }}>
-                    <Card card={card} />
+                    <Card card={{...card}} />
                   </div>)}
               </div>
             </div>
@@ -184,21 +174,39 @@ function App() {
               <button onClick={() => setAutoPlay(!autoPlay)}>
                 {autoPlay ? "Stop Auto Play" : "Start Auto Play"}
               </button>
-              <button onClick={handleNextHand}>Next hand</button>
-              <button onClick={resolveRound}>Resolve round</button>
+              <button onClick={handleNextHand} disabled={gameState.game}>Next hand</button>
+              <button onClick={resolveRound} disabled={!gameState.game}>Resolve round</button>
             </div>
 
             {gameState.game && gameState.game.player1Card && gameState.game.player2Card && (
               <div>
                 {gameState.game.player1Card.length > 1 && <p style={{ color: 'red', fontWeight: 'bold' }}>WAR!</p>}
-                <div style={{ display: "flex", gap: "10px" }}>
+                <div style={{ display: "flex", gap: "100px" }}>
                   <div>
                     <p>Player 1 ({gameState.game.player1Card.length} cards)</p>
-                    <Card card={gameState.game.player1Card[gameState.game.player1Card.length - 1]} />
+                    <div style={{ position: 'relative' }}>
+                      {gameState.game.player1Card.map((card, index) =>
+                        <div key={`p1-game-${index}`} style={{
+                          position: 'absolute', top: `${index * 30}px`
+                        }}>
+                          <Card card={{...card, faceUp: true}} />
+                        </div>
+                      )}
+                    </div>
+                    {/* <Card card={gameState.game.player1Card[gameState.game.player1Card.length - 1]} /> */}
                   </div>
                   <div>
                     <p>Player 2 ({gameState.game.player2Card.length} cards)</p>
-                    <Card card={gameState.game.player2Card[gameState.game.player2Card.length - 1]} />
+                    <div style={{ position: 'relative' }}>
+                      {gameState.game.player2Card.map((card, index) =>
+                        <div key={`p2-game-${index}`} style={{
+                          position: 'absolute', top: `${index * 30}px`
+                        }}>
+                          <Card card={{...card, faceUp: true}} />
+                        </div>
+                      )}
+                    </div>
+                    {/* <Card card={gameState.game.player2Card[gameState.game.player2Card.length - 1]} /> */}
                   </div>
                 </div>
               </div>
@@ -210,10 +218,10 @@ function App() {
               <div className="card-stack">
                 {player2Hand.map((card, index) =>
                   <div key={`p2-${index}`} style={{
-                    position: 'absolute', top: `${index * 3}px`, left: '50%',
+                    position: 'absolute', top: `${index * 5}px`, left: '50%',
                     transform: 'translateX(-50%)'
                   }}>
-                    <Card card={card} />
+                    <Card card={{...card}} />
                   </div>)}
               </div>
             </div>
