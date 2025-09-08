@@ -5,6 +5,7 @@ html, body {
     overflow-x: hidden;
     max-width: 100vw;
     font-family: 'Inter', 'Nunito Sans', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: gold;
 }
 
 .main-container {
@@ -25,6 +26,23 @@ html, body {
     min-width: 0;
 }
 
+.card-section {
+    flex: 8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 0;
+}
+
+.count-section {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
 .game-container {
     flex: 4;
     justify-items: center;
@@ -32,6 +50,7 @@ html, body {
 
 .card-stack {
     position: relative;
+    margin-bottom: 30rem;
 }
 
 .game-over-cont {

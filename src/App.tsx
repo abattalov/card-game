@@ -163,14 +163,19 @@ function App() {
         </>) :
         (<>
           <div className="player1-card-container">
-            <div className="card-stack">
-              {player1Hand.map((card, index) =>
-                <div key={`p1-${index}`} style={{
-                  position: 'absolute', top: `${index * 3}px`, left: '50%',
-                  transform: 'translateX(-50%)'
-                }}>
-                  <Card card={card} />
-                </div>)}
+            <div className="card-section">
+              <div className="card-stack">
+                {player1Hand.map((card, index) =>
+                  <div key={`p1-${index}`} style={{
+                    position: 'absolute', top: `${index * 3}px`, left: '50%',
+                    transform: 'translateX(-50%)'
+                  }}>
+                    <Card card={card} />
+                  </div>)}
+              </div>
+            </div>
+            <div className="count-section">
+              <h1>Cards: {player1Hand.length}</h1>
             </div>
           </div>
 
@@ -201,14 +206,19 @@ function App() {
           </div>
 
           <div className="player2-card-container">
-            <div className="card-stack">
-              {player2Hand.map((card, index) =>
-                <div key={`p2-${index}`} style={{
-                  position: 'absolute', top: `${index * 3}px`, left: '50%',
-                  transform: 'translateX(-50%)'
-                }}>
-                  <Card card={card} />
-                </div>)}
+            <div className="card-section">
+              <div className="card-stack">
+                {player2Hand.map((card, index) =>
+                  <div key={`p2-${index}`} style={{
+                    position: 'absolute', top: `${index * 3}px`, left: '50%',
+                    transform: 'translateX(-50%)'
+                  }}>
+                    <Card card={card} />
+                  </div>)}
+              </div>
+            </div>
+            <div className="count-section">
+              <h1>Cards: {player2Hand.length}</h1>
             </div>
           </div>
         </>)}
