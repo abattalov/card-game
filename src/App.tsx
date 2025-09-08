@@ -1,4 +1,5 @@
 import Card from "./components/Card";
+import Confetti from "./components/Confetti";
 import "./App.css";
 import type { GameState } from "./types/types";
 import { createStandardDeck, dealCards, getNextCard, getTieCards, shuffleDeck } from "./utils/deckUtils";
@@ -15,13 +16,67 @@ function App() {
   });
 
   const [autoPlay, setAutoPlay] = useState(false);
+  const [winner, setWinner] = useState<number | null>(null);
+
+  const [triggerConfetti, setTriggerConfetti] = useState(false);
+  const [keepBursting, setKeepBursting] = useState(false);
+
+  const startNewGame = () => {
+    const deck = createStandardDeck();
+    const newDeck = shuffleDeck(deck);
+    let playersHands = dealCards(newDeck);
+
+    setGameState(playersHands);
+
+    setWinner(null);
+    setAutoPlay(false);
+
+    setKeepBursting(false);
+    setTriggerConfetti(false);
+  };
+
+  const handleWin = () => {
+    setTriggerConfetti(true);
+    setKeepBursting(true);
+    setTimeout(() => setTriggerConfetti(false), 100);
+  };
 
   const handleNextHand = () => {
     setGameState(prev => getNextCard(prev))
   }
 
   useEffect(() => {
+    if (!keepBursting) return;
+
+    const interval = setInterval(() => {
+      setTriggerConfetti(true);
+      setTimeout(() => setTriggerConfetti(false), 100);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [keepBursting]);
+
+  const stopConfetti = () => {
+    setKeepBursting(false);
+  };
+
+  useEffect(() => {
     if (!autoPlay || gameState.game || gameState.player1.length === 0 || gameState.player2.length === 0) {
+      if (gameState.game === null && gameState.player1.length === 0) {
+        let declareWinner = 2;
+        setWinner(declareWinner)
+        handleWin();
+        console.log("game over");
+        console.log("winner is " + declareWinner);
+
+      } else if (gameState.game === null && gameState.player2.length === 0) {
+        let declareWinner = 1;
+        setWinner(declareWinner)
+        handleWin();
+        console.log("game over");
+        console.log("winner is " + declareWinner);
+
+      }
       return;
     }
 
@@ -83,7 +138,7 @@ function App() {
       }
     } else {
       if (gameState.player1.length === 0 || gameState.player2.length === 0) {
-        console.log("game over");
+
         return;
       }
     }
@@ -94,74 +149,71 @@ function App() {
 
   return (
     <div className="main-container">
-      <div className="player1-card-container">
-        <div className="card-stack">
-          {player1Hand.map((card, index) =>
-            <div key={`p1-${index}`} style={{ position: 'absolute', top: `${index * 3}px`, left: '50%',
-              transform: 'translateX(-50%)'}}>
-              <Card card={card} />
-            </div>)}
-        </div>
-      </div>
-
-      <div className="game-container">
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button onClick={() => setAutoPlay(!autoPlay)}>
-            {autoPlay ? "Stop Auto Play" : "Start Auto Play"}
-          </button>
-          <button onClick={handleNextHand}>next hand</button>
-          <button onClick={resolveRound}>resolve round</button>
-        </div>
-
-        {gameState.game && gameState.game.player1Card && gameState.game.player2Card && (
-          <div>
-            {gameState.game.player1Card.length > 1 && <p style={{ color: 'red', fontWeight: 'bold' }}>WAR!</p>}
-            <div style={{ display: "flex", gap: "10px" }}>
-              <div>
-                <p>Player 1 ({gameState.game.player1Card.length} cards)</p>
-                <Card card={gameState.game.player1Card[gameState.game.player1Card.length - 1]} />
-              </div>
-              <div>
-                <p>Player 2 ({gameState.game.player2Card.length} cards)</p>
-                <Card card={gameState.game.player2Card[gameState.game.player2Card.length - 1]} />
-              </div>
+      {winner ? (
+        <>
+          <div className="game-over-cont">
+            <h1>Player {winner} wins!</h1>
+            <button onClick={startNewGame}>Start New Game</button>
+          </div>
+          <Confetti
+            trigger={triggerConfetti}
+            particleCount={120}
+            spread={2.5}
+          />
+        </>) :
+        (<>
+          <div className="player1-card-container">
+            <div className="card-stack">
+              {player1Hand.map((card, index) =>
+                <div key={`p1-${index}`} style={{
+                  position: 'absolute', top: `${index * 3}px`, left: '50%',
+                  transform: 'translateX(-50%)'
+                }}>
+                  <Card card={card} />
+                </div>)}
             </div>
           </div>
-        )}
-      </div>
 
-      <div className="player2-card-container">
-        <div className="card-stack">
-          {player2Hand.map((card, index) =>
-            <div key={`p2-${index}`} style={{
-              position: 'absolute', top: `${index * 3}px`, left: '50%',
-              transform: 'translateX(-50%)'
-            }}>
-              <Card card={card} />
-            </div>)}
-        </div>
-      </div>
+          <div className="game-container">
+            <div style={{ display: "flex", gap: "10px" }}>
+              <button onClick={() => setAutoPlay(!autoPlay)}>
+                {autoPlay ? "Stop Auto Play" : "Start Auto Play"}
+              </button>
+              <button onClick={handleNextHand}>Next hand</button>
+              <button onClick={resolveRound}>Resolve round</button>
+            </div>
+
+            {gameState.game && gameState.game.player1Card && gameState.game.player2Card && (
+              <div>
+                {gameState.game.player1Card.length > 1 && <p style={{ color: 'red', fontWeight: 'bold' }}>WAR!</p>}
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <div>
+                    <p>Player 1 ({gameState.game.player1Card.length} cards)</p>
+                    <Card card={gameState.game.player1Card[gameState.game.player1Card.length - 1]} />
+                  </div>
+                  <div>
+                    <p>Player 2 ({gameState.game.player2Card.length} cards)</p>
+                    <Card card={gameState.game.player2Card[gameState.game.player2Card.length - 1]} />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="player2-card-container">
+            <div className="card-stack">
+              {player2Hand.map((card, index) =>
+                <div key={`p2-${index}`} style={{
+                  position: 'absolute', top: `${index * 3}px`, left: '50%',
+                  transform: 'translateX(-50%)'
+                }}>
+                  <Card card={card} />
+                </div>)}
+            </div>
+          </div>
+        </>)}
     </div>
   );
-
-
-  // return (
-  //   <div style={{ display: "flex", gap: "10px" }}>
-  //     <p>Player 1: {gameState.player1.length}</p>
-  //     <p>Player 2: {gameState.player2.length}</p>
-  //     <button onClick={() => setAutoPlay(!autoPlay)}>
-  //       {autoPlay ? "Stop Auto Play" : "Start Auto Play"}
-  //     </button>
-  //     <button onClick={handleNextHand}>next hand</button>
-  //     <button onClick={resolveRound}>resolve round</button>
-  //     {gameState.game && gameState.game.player1Card && gameState.game.player2Card &&
-  //       <>
-  //         <Card card={gameState.game.player1Card[0]}/>
-  //         <Card card={gameState.game.player2Card[0]}/>
-  //       </>
-  //     }
-  //   </div>
-  // );
 }
 
 export default App;
