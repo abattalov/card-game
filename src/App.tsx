@@ -17,6 +17,7 @@ function App() {
 
   const [autoPlay, setAutoPlay] = useState(false);
   const [winner, setWinner] = useState<number | null>(null);
+  const [autoPlaySpeed, setAutoPlaySpeed] = useState(1000);
 
   const [triggerConfetti, setTriggerConfetti] = useState(false);
   const [keepBursting, setKeepBursting] = useState(false);
@@ -86,7 +87,7 @@ function App() {
 
     const resolveTimer = setTimeout(() => {
       resolveRound();
-    }, 1000)
+    }, autoPlaySpeed)
 
     return () => clearTimeout(resolveTimer);
   }, [autoPlay, gameState.game])
@@ -160,7 +161,7 @@ function App() {
                     position: 'absolute', top: `${index * 5}px`, left: '50%',
                     transform: 'translateX(-50%)'
                   }}>
-                    <Card card={{...card}} />
+                    <Card card={{ ...card }} />
                   </div>)}
               </div>
             </div>
@@ -176,6 +177,14 @@ function App() {
               </button>
               <button onClick={handleNextHand} disabled={gameState.game}>Next hand</button>
               <button onClick={resolveRound} disabled={!gameState.game}>Resolve round</button>
+              <label>{autoPlaySpeed/1000}s</label>
+              <input
+                type="range"
+                min="100"
+                max="2000"
+                value={autoPlaySpeed}
+                onChange={(e) => setAutoPlaySpeed(Number(e.target.value))}
+              />
             </div>
 
             {gameState.game && gameState.game.player1Card && gameState.game.player2Card && (
@@ -189,7 +198,7 @@ function App() {
                         <div key={`p1-game-${index}`} style={{
                           position: 'absolute', top: `${index * 30}px`
                         }}>
-                          <Card card={{...card, faceUp: true}} />
+                          <Card card={{ ...card, faceUp: true }} />
                         </div>
                       )}
                     </div>
@@ -202,7 +211,7 @@ function App() {
                         <div key={`p2-game-${index}`} style={{
                           position: 'absolute', top: `${index * 30}px`
                         }}>
-                          <Card card={{...card, faceUp: true}} />
+                          <Card card={{ ...card, faceUp: true }} />
                         </div>
                       )}
                     </div>
@@ -221,7 +230,7 @@ function App() {
                     position: 'absolute', top: `${index * 5}px`, left: '50%',
                     transform: 'translateX(-50%)'
                   }}>
-                    <Card card={{...card}} />
+                    <Card card={{ ...card }} />
                   </div>)}
               </div>
             </div>
