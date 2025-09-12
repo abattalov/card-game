@@ -170,7 +170,7 @@ function App() {
           </div>
 
           <div className="game-container">
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div className="button-container">
               <button onClick={() => setAutoPlay(!autoPlay)}>
                 {autoPlay ? "Stop Auto Play" : "Start Auto Play"}
               </button>
@@ -181,10 +181,10 @@ function App() {
             {gameState.game && gameState.game.player1Card && gameState.game.player2Card && (
               <div>
                 {gameState.game.player1Card.length > 1 && <p style={{ color: 'red', fontWeight: 'bold' }}>WAR!</p>}
-                <div style={{ display: "flex", gap: "100px" }}>
+                <div className="card-container">
                   <div>
                     <p>Player 1 ({gameState.game.player1Card.length} cards)</p>
-                    <div style={{ position: 'relative' }}>
+                    <div className="card-display-area">
                       {gameState.game.player1Card.map((card, index) =>
                         <div key={`p1-game-${index}`} style={{
                           position: 'absolute', top: `${index * 30}px`
@@ -197,7 +197,7 @@ function App() {
                   </div>
                   <div>
                     <p>Player 2 ({gameState.game.player2Card.length} cards)</p>
-                    <div style={{ position: 'relative' }}>
+                    <div className="card-display-area">
                       {gameState.game.player2Card.map((card, index) =>
                         <div key={`p2-game-${index}`} style={{
                           position: 'absolute', top: `${index * 30}px`
