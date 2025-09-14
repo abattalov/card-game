@@ -5,10 +5,14 @@
     align-items: center;
 }
 
-.durak-game-container {
 
+.durak-game-container {
 }
 
 .durak-button-container {
 
+}
+
+.durak-hand-container {
+    display: flex;
 }

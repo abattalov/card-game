@@ -4,7 +4,7 @@
     width: auto; /* Will maintain aspect ratio */
     /* border-radius: 3px; */
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
-    cursor: grab;
+    /* cursor: grab; */
     position: relative;
     object-fit: cover;
     z-index: 1;
@@ -14,4 +14,16 @@
     -khtml-user-drag: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+}
+
+.hand-card {
+    position: absolute;
+    transform-origin: center bottom;
+    transform: translate(var(--x), var(--y)) rotate(var(--rotation)); /* normal state */
+    transition: transform 0.2s ease;
+}
+
+.hand-card:hover {
+    transform: translate(var(--x), var(--y)) rotate(var(--rotation)) translateY(-50px); /* hover state */
+    /* z-index: 10; */
 }

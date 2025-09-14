@@ -4,14 +4,31 @@ interface HandComponentProps {
     hand: Card[];
 }
 
-function HandComponent({hand}: HandComponentProps){
+function lerp(start: number, end: number, t: number) {
+    return start + (end - start) * t;
+}
+
+function HandComponent({ hand }: HandComponentProps) {
 
 
     return (
-        <div>
+        <div className='durak-hand-container'>
             {hand.map((card, index) => {
+                const t = index / (hand.length - 1);
+                const horizontalSpacing = 20;
+                const rotation = lerp(-45, 45, t);
+                const angleInRadians = rotation * Math.PI / 180;
+                const radius = 20;
+                const x = radius * Math.sin(angleInRadians) + (index * horizontalSpacing);
+                const y = radius * Math.cos(angleInRadians);
                 return (
-                    <Card key={`p1-${index}`} card={card}/>
+                    <div key={`p1-${index}`} className='hand-card' style={{
+                        '--x': `${x}px`,
+                        '--y': `${y}px`,
+                        '--rotation': `${rotation}deg`,
+                    } as React.CSSProperties}>
+                        <Card card={card} />
+                    </div>
                 );
             })}
         </div>
