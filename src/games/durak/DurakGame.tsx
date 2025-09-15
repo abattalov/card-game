@@ -1,4 +1,4 @@
-
+import CardStack from '../../components/CardStack';
 import HandComponent from '../../components/HandComponent';
 import { createStandardDeck, shuffleDeck } from '../../utils/deckUtils';
 import '/src/styles/games/Durak.css';
@@ -22,7 +22,26 @@ function DurakGame({ onBack }: DurakGamePropTypes) {
                 <h1>Durak</h1>
             </div>
             <div className="durak-game-container">
-                <HandComponent hand={hand}/>
+                <div className='durak-left-container'>
+                    <CardStack 
+                        cards={deck}
+                        playerNumber={1}
+                        offset={1}
+                        />
+                        <p>LEFT CONTAINER</p>
+                </div>
+                <div className='durak-middle-container'>
+                    <div className='play-area'>
+
+                    </div>
+                    <div className='player-hand-container'>
+                        <HandComponent hand={hand}/>
+                    </div>
+                    <p>MIDDLE CONTAINER</p>
+                </div>
+                <div className='durak-right-container'>
+                        <p>RIGHT CONTAINER</p>
+                </div>
             </div>
         </div>
     );

@@ -4,6 +4,7 @@ import "../../styles/games/war.css";
 import { dealCards, getNextCard, getTieCards } from "./warUtils";
 import { createStandardDeck, shuffleDeck } from "../../utils/deckUtils";
 import { useEffect, useState } from 'react';
+import CardStack from "../../components/CardStack";
 
 interface WarGameProps {
     onBack: () => void;
@@ -159,15 +160,10 @@ function WarGame({ onBack }: WarGameProps) {
                 (<>
                     <div className="player1-card-container">
                         <div className="card-section">
-                            <div className="card-stack">
-                                {player1Hand.map((card, index) =>
-                                    <div key={`p1-${index}`} style={{
-                                        position: 'absolute', top: `${index * 5}px`, left: '50%',
-                                        transform: 'translateX(-50%)'
-                                    }}>
-                                        <Card card={{ ...card }} />
-                                    </div>)}
-                            </div>
+                            <CardStack
+                                cards={player1Hand}
+                                playerNumber={1}
+                                offset={5} />
                         </div>
                         <div className="count-section">
                             <h1>Cards: {player1Hand.length}</h1>
@@ -229,15 +225,9 @@ function WarGame({ onBack }: WarGameProps) {
 
                     <div className="player2-card-container">
                         <div className="card-section">
-                            <div className="card-stack">
-                                {player2Hand.map((card, index) =>
-                                    <div key={`p2-${index}`} style={{
-                                        position: 'absolute', top: `${index * 5}px`, left: '50%',
-                                        transform: 'translateX(-50%)'
-                                    }}>
-                                        <Card card={{ ...card }} />
-                                    </div>)}
-                            </div>
+                            <CardStack cards={player2Hand}
+                             playerNumber={2}
+                             offset={5} />
                         </div>
                         <div className="count-section">
                             <h1>Cards: {player2Hand.length}</h1>

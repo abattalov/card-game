@@ -1,7 +1,8 @@
-import Card from '/src/components/Card';
+import Card from '../components/Card';
+import type { Card as CardType} from '../types/types';
 
 interface HandComponentProps {
-    hand: Card[];
+    hand: CardType[];
 }
 
 function lerp(start: number, end: number, t: number) {
