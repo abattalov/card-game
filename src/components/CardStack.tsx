@@ -9,13 +9,15 @@ interface CardStackProps {
 }
 
 function CardStack({cards, playerNumber, offset}: CardStackProps) {
+    const cardSize = "20vh";
     return (
         <div className="card-stack">
             {cards.map((card, index) =>
                 <div key={`p${playerNumber}-${index}`} style={{
                     position: 'absolute', top: `${index * offset}px`, left: '50%',
-                    transform: 'translateX(-50%)'
-                }}>
+                    transform: 'translateX(-50%)',
+                    '--cardSize': cardSize
+                } as React.CSSProperties}>
                     <Card card={{ ...card }} />
                 </div>)}
         </div>

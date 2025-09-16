@@ -9,7 +9,7 @@ interface DurakGamePropTypes {
 
 let deck = shuffleDeck(createStandardDeck());
 
-let hand = deck.slice(0,6).map(card => ({...card, faceUp: true}));
+let hand = deck.slice(0,8).map(card => ({...card, faceUp: true}));
 
 console.log(hand);
 
@@ -28,16 +28,14 @@ function DurakGame({ onBack }: DurakGamePropTypes) {
                         playerNumber={1}
                         offset={1}
                         />
-                        <p>LEFT CONTAINER</p>
                 </div>
                 <div className='durak-middle-container'>
                     <div className='play-area'>
-
+                        <h1>PLAY AREA</h1>
                     </div>
                     <div className='player-hand-container'>
                         <HandComponent hand={hand}/>
                     </div>
-                    <p>MIDDLE CONTAINER</p>
                 </div>
                 <div className='durak-right-container'>
                         <p>RIGHT CONTAINER</p>

@@ -10,17 +10,20 @@ function lerp(start: number, end: number, t: number) {
 }
 
 function HandComponent({ hand }: HandComponentProps) {
-
+    const cardSize = "20vh";
 
     return (
-        <div className='durak-hand-container'>
+        <div className='durak-hand-container' style={{
+            '--cardSize': cardSize
+        } as React.CSSProperties}>
             {hand.map((card, index) => {
                 const t = index / (hand.length - 1);
                 const horizontalSpacing = 20;
                 const rotation = lerp(-45, 45, t);
                 const angleInRadians = rotation * Math.PI / 180;
                 const radius = 20;
-                const x = radius * Math.sin(angleInRadians) + (index * horizontalSpacing);
+                // const x = radius * Math.sin(angleInRadians) + (index * horizontalSpacing);
+                const x = radius * Math.sin(angleInRadians) + (index * horizontalSpacing) - ((hand.length - 1) * horizontalSpacing) / 2;
                 const y = radius * Math.cos(angleInRadians);
                 return (
                     <div key={`p1-${index}`} className='hand-card' style={{
